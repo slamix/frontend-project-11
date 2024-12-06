@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSS Reader</title>
+    <title>RSS агрегатор</title>
 </head>
 <body>
     <div class="container">
-        <h1>RSS Reader</h1>
-        <div class="form-group">
-            <label for="rssUrl">URL RSS-потока:</label>
-            <input type="text" id="rssUrl" placeholder="Ссылка RSS">
+        <div class="row">
+          <div class="col">
+            <h1 class"header">RSS агрегатор</h1>
+            <p>Введите ссылку RSS:</p>
+            <form action >
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Ссылка RSS">
+                    <label for="floatingInput">Ссылка RSS</label>
+                </div>
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </form>
+          </div>
         </div>
-        <button id="addRss">Добавить RSS</button>
-        <div id="rssContent">
+        <hr>
+        <div class="container">
 
         </div>
     </div>
+
 </body>
 </html>
