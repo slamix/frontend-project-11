@@ -11,9 +11,9 @@
           <div class="col">
             <h1 class"header">RSS агрегатор</h1>
             <p>Введите ссылку RSS:</p>
-            <form action >
+            <form action class='form'>
                 <div class="form-floating mb-3">
-                    <input type="url" class="form-control" id="floatingInput" placeholder="Ссылка RSS">
+                    <input name="url" type="url" class="form-control" id="floatingInput" placeholder="Ссылка RSS">
                     <label for="floatingInput">Ссылка RSS</label>
                 </div>
                 <button type="submit" class="btn btn-success">Добавить</button>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <hr>
-        <div class="container">
+        <div class="container" id="rss-content">
 
         </div>
     </div>
