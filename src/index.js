@@ -12,7 +12,7 @@ const rssContent = document.querySelector('#rss-content')
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const rssUrl = rssInput.value;
-  rssInput.classList.remove('error');
+  rssInput.classList.remove('is-invalid');
   shema.validate(rssUrl)
     .then(() => {
       if (feeds.has(rssUrl)) {
@@ -22,7 +22,6 @@ form.addEventListener('submit', (e) => {
       return Promise.resolve();
     })
     .then(() => {
-      rssInput.classList.remove('is-invalid');
       feeds.add(rssUrl);
       rssContent.innerHTML += `<p>RSS поток: ${rssUrl} </p>`;
       rssInput.value = '';
