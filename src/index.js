@@ -1,6 +1,7 @@
 import  'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as yup from 'yup';
+import i18next from 'i18next';
 
 const shema = yup.string().url().required();
 const feeds = new Set();
