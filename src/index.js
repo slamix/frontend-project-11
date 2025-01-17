@@ -2,6 +2,13 @@ import  'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as yup from 'yup';
 import i18next from 'i18next';
+import info from './info.js';
+
+yup.setLocale({
+  string: {
+    url: 'qpwkfpqf',
+  }
+});
 
 const shema = yup.string().url().required();
 const feeds = new Set();
@@ -17,8 +24,7 @@ form.addEventListener('submit', (e) => {
   shema.validate(rssUrl)
     .then(() => {
       if (feeds.has(rssUrl)) {
-        rssInput.classList.add('is-invalid');
-        throw new Error('RSS поток уже добавлен');
+        throw new Error(info.errors.exists);
       }
       return Promise.resolve();
     })
