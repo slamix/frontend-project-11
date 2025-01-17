@@ -1,17 +1,27 @@
-import  'bootstrap';
+import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as yup from 'yup';
 import i18next from 'i18next';
 import info from './info.js';
 
-yup.setLocale({
-  string: {
-    url: 'qpwkfpqf',
-  }
+i18next.init({
+  lng: 'ru',
+  debug: false,
+  resources: info,
 });
 
-const shema = yup.string().url().required();
+yup.setLocale({
+  mixed: {
+    notOneOf: () => ({ key: 'errors.exists' }),
+  },
+  string: {
+    url: () => ({ key: 'errors.notUrl' }),
+  } 
+});
+
 const feeds = new Set();
+
+const shema = yup.string().url('Ссылка должна быть валидным URL').required('Не должно быть пустым')
 
 const form = document.getElementById('form');
 const rssInput = document.querySelector('.form-control');
@@ -24,7 +34,7 @@ form.addEventListener('submit', (e) => {
   shema.validate(rssUrl)
     .then(() => {
       if (feeds.has(rssUrl)) {
-        throw new Error(info.errors.exists);
+        throw new Error(info.translation.errors.exists);
       }
       return Promise.resolve();
     })
