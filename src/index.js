@@ -11,7 +11,17 @@ i18next.init({
   resources: info,
 });
 
-const sсhema = yup.string().url(i18next.t('errors.notUrl')).required(i18next.t('errors.required'));
+yup.setLocale({
+  mixed: {
+    notOneOf: () => i18next.t('errors.exists'),
+    required: () => i18next.t('errors.required'),
+  },
+  string: {
+    url: () => i18next.t('errors.notUrl'),
+  },
+});
+
+const sсhema = yup.string().url().required();
 
 const app = () => {
   const form = document.querySelector('form');
