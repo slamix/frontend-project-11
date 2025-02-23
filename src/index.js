@@ -1,10 +1,17 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as yup from 'yup';
+import i18next from 'i18next';
 import watchedState from './view.js';
 import info from './info.js';
 
-const sсhema = yup.string().url('Ссылка должна быть валидным URL').required('Не должно быть пустым');
+i18next.init({
+  lng: 'ru',
+  debug: false,
+  resources: info,
+});
+
+const sсhema = yup.string().url(i18next.t('errors.notUrl')).required(i18next.t('errors.required'));
 
 const app = () => {
   const form = document.querySelector('form');
@@ -18,7 +25,7 @@ const app = () => {
     sсhema.validate(url)
       .then(() => {
         if (watchedState.feeds.includes(url)) {
-          throw new Error(info.translation.errors.exists);
+          throw new Error(i18next.t('errors.exists'));
         }
 
         watchedState.feeds.push(url);
