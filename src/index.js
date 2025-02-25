@@ -10,7 +10,7 @@ i18next.init({
   debug: false,
   resources: info,
 });
-
+// Пример: https://lorem-rss.hexlet.app/feed
 yup.setLocale({
   mixed: {
     notOneOf: () => i18next.t('errors.exists'),
@@ -41,10 +41,11 @@ const app = () => {
         watchedState.feeds.push(url);
         input.classList.remove('is-invalid');
         input.value = '';
+        watchedState.error = null;
       })
       .catch((error) => {
         input.classList.add('is-invalid');
-        watchedState.errors.push(error.message);
+        watchedState.error = error.message;
       });
   });
 }
