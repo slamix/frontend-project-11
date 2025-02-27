@@ -7,27 +7,13 @@ const state = {
   error: null,
 };
 
-/* const errorWatcher = (state, input) => {
-  const forError = document.querySelector('#cont-for-error');
-  if (!input.classList.contains('is-invalid')) {
-    state.error = null;
-    forError.textContent = '';
-    return;
-  }
-  forError.textContent = state.error;
-  return
-} */
-
 // TODO need to work with architecture of render function (improve error)
 
-const render = (state) => {
+const renderContent = (state) => {
   const headerOfFeeds = document.querySelector('#feeds');
   const ulForFeeds = document.querySelector('#for-feeds');
   const headerOfPosts = document.querySelector('#posts');
   const ulForPosts = document.querySelector('#for-posts');
-  const forError = document.querySelector('#notification');
-  const input = document.querySelector('input');
-  input.focus();
   headerOfFeeds.textContent = 'Фиды';
   headerOfPosts.textContent = 'Посты';
   ulForFeeds.innerHTML = '';
@@ -53,18 +39,26 @@ const render = (state) => {
     li.appendChild(a);
     ulForPosts.appendChild(li);
   }));
-  
-  if (!input.classList.contains('is-invalid')) {
-    state.error = null;
-    forError.textContent = 'RSS успешно загружен';
+}
+
+const render = (state) => {
+  const input = document.querySelector('input');
+  const notification = document.querySelector('#notification');
+  if (state.error !== null) {
+    notification.textContent = state.error;
     return;
   }
-  forError.textContent = state.error;
+  renderContent(state);
+  input.classList.remove('is-invalid');
+  input.focus();
+  input.value = '';
+  notification.textContent = 'RSS успешно загружен';
   return;
-  
-  // errorWatcher(state, input);
-} 
+}
 
-const watchedState = onChange(state, () => render(state));
+const watchedState = onChange(state, (path) => {
+  console.log(path);
+  render(state);
+})
 
 export default watchedState;

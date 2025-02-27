@@ -12,7 +12,7 @@ i18next.init({
   debug: false,
   resources: info,
 });
-// Пример: https://lorem-rss.hexlet.app/feed
+
 yup.setLocale({
   mixed: {
     notOneOf: () => i18next.t('errors.exists'),
@@ -35,13 +35,9 @@ const app = () => {
     const url = formData.get('url');
 
     sсhema.validate(url)
-      .then(() => { // TODO we need to check our url, because we have links in
-      // state (its more easier then check objects of feeds)
+      .then(() => { 
         if (watchedState.links.includes(url)) {
           throw new Error(i18next.t('errors.exists'));
-        }
-        if (!url.includes('rss')) {
-          throw new Error(i18next.t('errors.noRss'));
         }
 
         const urlWithProxy = addProxy(url);
@@ -49,17 +45,23 @@ const app = () => {
           .then((response) => {
             const { feed, posts } = parseData(response.data.contents);
             
+            if (feed === null && posts === null) {
+              throw new Error(i18next.t('errors.noRss'));
+            }
+            
             watchedState.links.push(url);
             watchedState.feeds.push(feed);
             watchedState.posts.push(posts);
-
-            input.classList.remove('is-invalid');
-            input.value = '';
             watchedState.error = null;
           })
           .catch((error) => {
-            input.classList.remove('is-invalid');
-            watchedState.error = error.message;
+            input.classList.add('is-invalid');
+            console.log(error.code);
+            if (error.code === 'ERR_NETWORK') {
+              watchedState.error = i18next.t('errors.network');
+            } else {
+              watchedState.error = i18next.t('errors.unknown');
+            }
           });
       })
       .catch((error) => {

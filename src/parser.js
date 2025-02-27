@@ -10,6 +10,11 @@ const addProxy = (url) => {
 const parseData = (data) => {
   const parser = new DOMParser();
   const htmlData = parser.parseFromString(data, 'text/xml');
+
+  if (htmlData.querySelector('parsererror')) {
+    return { feed: null, posts: null };
+  }
+
   const title = htmlData.querySelector('title');
   const description = htmlData.querySelector('description');
   const items = [...htmlData.querySelectorAll('item')];
