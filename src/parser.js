@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import i18next from 'i18next';
 
 const addProxy = (url) => {
   const urlWithProxy = new URL('/get', 'https://allorigins.hexlet.app');
@@ -12,7 +13,7 @@ const parseData = (data) => {
   const htmlData = parser.parseFromString(data, 'text/xml');
 
   if (htmlData.querySelector('parsererror')) {
-    return { feed: null, posts: null };
+    throw new Error(i18next.t('errors.noRss'));
   }
 
   const title = htmlData.querySelector('title');

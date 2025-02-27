@@ -1,4 +1,5 @@
 import onChange from "on-change";
+import i18next from "i18next";
 
 const state = {
   links: [],
@@ -7,15 +8,13 @@ const state = {
   error: null,
 };
 
-// TODO need to work with architecture of render function (improve error)
-
 const renderContent = (state) => {
   const headerOfFeeds = document.querySelector('#feeds');
   const ulForFeeds = document.querySelector('#for-feeds');
   const headerOfPosts = document.querySelector('#posts');
   const ulForPosts = document.querySelector('#for-posts');
-  headerOfFeeds.textContent = 'Фиды';
-  headerOfPosts.textContent = 'Посты';
+  headerOfFeeds.textContent = i18next.t('feeds');
+  headerOfPosts.textContent = i18next.t('posts');
   ulForFeeds.innerHTML = '';
   ulForPosts.innerHTML = '';
 
@@ -52,13 +51,10 @@ const render = (state) => {
   input.classList.remove('is-invalid');
   input.focus();
   input.value = '';
-  notification.textContent = 'RSS успешно загружен';
+  notification.textContent = i18next.t('loading.success');
   return;
 }
 
-const watchedState = onChange(state, (path) => {
-  console.log(path);
-  render(state);
-})
+const watchedState = onChange(state, () => render(state));
 
 export default watchedState;

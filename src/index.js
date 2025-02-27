@@ -28,26 +28,22 @@ const sсhema = yup.string().url().required();
 const app = () => {
   const form = document.querySelector('form');
   const input = document.querySelector('input');
+  const button = document.querySelector('#main-btn');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const url = formData.get('url');
-
     sсhema.validate(url)
       .then(() => { 
         if (watchedState.links.includes(url)) {
           throw new Error(i18next.t('errors.exists'));
         }
-
+        button.disabled = true;
         const urlWithProxy = addProxy(url);
         axios.get(urlWithProxy)
           .then((response) => {
             const { feed, posts } = parseData(response.data.contents);
-            
-            if (feed === null && posts === null) {
-              throw new Error(i18next.t('errors.noRss'));
-            }
             
             watchedState.links.push(url);
             watchedState.feeds.push(feed);
@@ -56,13 +52,13 @@ const app = () => {
           })
           .catch((error) => {
             input.classList.add('is-invalid');
-            console.log(error.code);
             if (error.code === 'ERR_NETWORK') {
               watchedState.error = i18next.t('errors.network');
             } else {
-              watchedState.error = i18next.t('errors.unknown');
+              watchedState.error = error.message;
             }
-          });
+          })
+          .finally(() => button.disabled = false);
       })
       .catch((error) => {
         input.classList.add('is-invalid');
