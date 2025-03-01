@@ -8,7 +8,7 @@ const addProxy = (url) => {
   return urlWithProxy.toString();
 }
 
-const parseData = (data) => {
+const parseData = (data, urlWithProxy) => {
   const parser = new DOMParser();
   const htmlData = parser.parseFromString(data, 'text/xml');
 
@@ -20,22 +20,24 @@ const parseData = (data) => {
   const description = htmlData.querySelector('description');
   const items = [...htmlData.querySelectorAll('item')];
   const feed = {
+    link: urlWithProxy,
     title: title.textContent,
     description: description.textContent,
     id: _.uniqueId(),
   };
+
   const posts = items.map((item) => {
     const name = item.querySelector('title').textContent;
     const description = item.querySelector('description').textContent;
     const link = item.querySelector('link').textContent;
-    const id = _.uniqueId();
-    const feedId = feed.id;
+    const id = item.querySelector('guid').textContent;
+
     return {
       name,
       description,
       link,
       id,
-      feedId,
+      feedId: feed.id,
     };
   });
 

@@ -6,6 +6,7 @@ import axios from 'axios';
 import watchedState from './view.js';
 import info from './info.js';
 import { addProxy, parseData } from './parser.js';
+import startCheck from './checker.js';
 
 i18next.init({
   lng: 'ru',
@@ -35,19 +36,20 @@ const app = () => {
     const formData = new FormData(e.target);
     const url = formData.get('url');
     sсhema.validate(url)
-      .then(() => { 
-        if (watchedState.links.includes(url)) {
+      .then(() => {
+        const urlWithProxy = addProxy(url);
+        const feedsLinks = watchedState.feeds.map((feed) => feed.link);
+        if (feedsLinks.includes(urlWithProxy)) {
           throw new Error(i18next.t('errors.exists'));
         }
+
         button.disabled = true;
-        const urlWithProxy = addProxy(url);
         axios.get(urlWithProxy)
           .then((response) => {
-            const { feed, posts } = parseData(response.data.contents);
+            const { feed, posts } = parseData(response.data.contents, urlWithProxy);
             
-            watchedState.links.push(url);
             watchedState.feeds.push(feed);
-            watchedState.posts.push(posts);
+            watchedState.posts = [...watchedState.posts, ...posts];
             watchedState.error = null;
           })
           .catch((error) => {
@@ -68,3 +70,4 @@ const app = () => {
 }
 
 app();
+startCheck();

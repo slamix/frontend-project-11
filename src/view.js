@@ -2,7 +2,6 @@ import onChange from "on-change";
 import i18next from "i18next";
 
 const state = {
-  links: [],
   feeds: [],
   posts: [],
   error: null,
@@ -29,7 +28,7 @@ const renderContent = (state) => {
     ulForFeeds.appendChild(li);
   });
 
-  state.posts.forEach((coll) => coll.forEach((post) => {
+  state.posts.forEach((post) => {
     const li = document.createElement('li');
     li.id = post.id;
     const a = document.createElement('a');
@@ -37,7 +36,7 @@ const renderContent = (state) => {
     a.textContent = post.name;
     li.appendChild(a);
     ulForPosts.appendChild(li);
-  }));
+  });
 }
 
 const render = (state) => {
