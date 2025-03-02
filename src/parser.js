@@ -38,6 +38,7 @@ const parseData = (data, urlWithProxy) => {
       link,
       id,
       feedId: feed.id,
+      isRead: false,
     };
   });
 

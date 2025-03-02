@@ -19,6 +19,7 @@ const rssChecker = (feed) => {
           link,
           id,
           feedId: feed.id,
+          isRead: false,
         }
       });
       const postsWithFeedId = watchedState.posts.filter((post) => post.feedId === feed.id);

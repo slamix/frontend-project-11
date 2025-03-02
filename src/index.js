@@ -49,7 +49,7 @@ const app = () => {
             const { feed, posts } = parseData(response.data.contents, urlWithProxy);
             
             watchedState.feeds.push(feed);
-            watchedState.posts = [...watchedState.posts, ...posts];
+            watchedState.posts = [...posts, ...watchedState.posts];
             watchedState.error = null;
           })
           .catch((error) => {
