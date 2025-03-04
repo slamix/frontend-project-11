@@ -4,7 +4,7 @@ import i18next from "i18next";
 const state = {
   feeds: [],
   posts: [],
-  error: null,
+  notification: null,
 };
 
 const renderFeeds = (state) => {
@@ -91,6 +91,7 @@ const renderError = (state) => {
 const watchedState = onChange(state, (path) => {
   if (path === 'feeds') {
     renderFeeds(state);
+    renderError(state);
   }
   if (path === 'posts') {
     renderPosts(state);
