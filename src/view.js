@@ -7,16 +7,11 @@ const state = {
   error: null,
 };
 
-const renderContent = (state) => {
+const renderFeeds = (state) => {
   const headerOfFeeds = document.querySelector('#feeds');
   const ulForFeeds = document.querySelector('#for-feeds');
-  const headerOfPosts = document.querySelector('#posts');
-  const ulForPosts = document.querySelector('#for-posts');
   headerOfFeeds.textContent = i18next.t('feeds');
-  headerOfPosts.textContent = i18next.t('posts');
   ulForFeeds.innerHTML = '';
-  ulForPosts.innerHTML = '';
-
   state.feeds.forEach((feed) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item');
@@ -28,7 +23,13 @@ const renderContent = (state) => {
     li.append(h4, p);
     ulForFeeds.appendChild(li);
   });
+}
 
+const renderPosts = (state) => {
+  const headerOfPosts = document.querySelector('#posts');
+  const ulForPosts = document.querySelector('#for-posts');
+  headerOfPosts.textContent = i18next.t('posts');
+  ulForPosts.innerHTML = '';
   state.posts.forEach((post) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -70,7 +71,7 @@ const renderContent = (state) => {
   });
 }
 
-const render = (state) => {
+const renderError = (state) => {
   const input = document.querySelector('input');
   const notification = document.querySelector('#notification');
   if (state.error !== null) {
@@ -78,7 +79,6 @@ const render = (state) => {
     notification.textContent = state.error;
     return;
   }
-  renderContent(state);
   input.classList.remove('is-invalid');
   input.focus();
   input.value = '';
@@ -88,6 +88,16 @@ const render = (state) => {
   return;
 }
 
-const watchedState = onChange(state, () => render(state));
+const watchedState = onChange(state, (path) => {
+  if (path === 'feeds') {
+    renderFeeds(state);
+  }
+  if (path === 'posts') {
+    renderPosts(state);
+  }
+  if (path === 'error') {
+    renderError(state);
+  }
+});
 
 export default watchedState;

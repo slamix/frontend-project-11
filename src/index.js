@@ -4,14 +4,14 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
 import watchedState from './view.js';
-import info from './info.js';
+import ru from '../locales/ru.js'
 import { addProxy, parseData } from './parser.js';
 import startCheck from './checker.js';
 
 i18next.init({
   lng: 'ru',
   debug: false,
-  resources: info,
+  resources: ru,
 });
 
 yup.setLocale({
