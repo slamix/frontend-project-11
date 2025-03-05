@@ -1,4 +1,4 @@
-import { app, startCheck } from "./app";
+import { app, startCheck } from './app.js';
 
 app();
 startCheck();

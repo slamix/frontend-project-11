@@ -110,7 +110,9 @@ const app = () => {
               watchedState.error = error.message;
             }
           })
-          .finally(() => button.disabled = false);
+          .finally(() => {
+            button.disabled = false;
+          });
       })
       .catch((error) => {
         input.classList.add('is-invalid');

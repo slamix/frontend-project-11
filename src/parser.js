@@ -10,12 +10,12 @@ const parseData = (data, urlWithProxy) => {
   }
 
   const title = htmlData.querySelector('title');
-  const description = htmlData.querySelector('description');
+  const descOfFeed = htmlData.querySelector('description');
   const items = [...htmlData.querySelectorAll('item')];
   const feed = {
     link: urlWithProxy,
     title: title.textContent,
-    description: description.textContent,
+    descOfFeed: descOfFeed.textContent,
     id: _.uniqueId(),
   };
 

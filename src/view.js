@@ -1,5 +1,6 @@
 import onChange from 'on-change';
 import i18next from 'i18next';
+import { Modal } from 'bootstrap';
 
 const state = {
   feeds: [],
@@ -7,30 +8,30 @@ const state = {
   notification: null,
 };
 
-const renderFeeds = (state) => {
+const renderFeeds = ({ feeds }) => {
   const headerOfFeeds = document.querySelector('#feeds');
   const ulForFeeds = document.querySelector('#for-feeds');
   headerOfFeeds.textContent = i18next.t('feeds');
   ulForFeeds.innerHTML = '';
-  state.feeds.forEach((feed) => {
+  feeds.forEach((feed) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item');
     li.id = feed.id;
     const h4 = document.createElement('h4');
     const p = document.createElement('p');
     h4.textContent = feed.title;
-    p.textContent = feed.description;
+    p.textContent = feed.descOfFeed;
     li.append(h4, p);
     ulForFeeds.appendChild(li);
   });
 };
 
-const renderPosts = (state) => {
+const renderPosts = ({ posts }) => {
   const headerOfPosts = document.querySelector('#posts');
   const ulForPosts = document.querySelector('#for-posts');
   headerOfPosts.textContent = i18next.t('posts');
   ulForPosts.innerHTML = '';
-  state.posts.forEach((post) => {
+  posts.forEach((post) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
     li.id = post.id;
@@ -50,7 +51,7 @@ const renderPosts = (state) => {
     button.textContent = i18next.t('preview');
     button.addEventListener('click', (e) => {
       e.preventDefault();
-
+      // eslint-disable-next-line no-param-reassign
       post.isRead = true;
       a.classList.remove('fw-bold');
       a.classList.add('fw-normal');
@@ -60,7 +61,7 @@ const renderPosts = (state) => {
       modalTitle.textContent = post.name;
       modalDescription.textContent = post.description;
       modalLink.setAttribute('href', post.link);
-      const modal = new bootstrap.Modal(document.getElementById('postModal'));
+      const modal = new Modal(document.getElementById('postModal'));
       modal.show();
     });
     li.append(a, button);
@@ -68,12 +69,12 @@ const renderPosts = (state) => {
   });
 };
 
-const renderError = (state) => {
+const renderError = ({ error }) => {
   const input = document.querySelector('input');
   const notification = document.querySelector('#notification');
-  if (state.error !== null) {
+  if (error !== null) {
     notification.classList.add('text-danger');
-    notification.textContent = state.error;
+    notification.textContent = error;
     return;
   }
   input.classList.remove('is-invalid');
