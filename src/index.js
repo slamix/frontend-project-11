@@ -1,10 +1,10 @@
 import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import * as yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
 import watchedState from './view.js';
-import ru from '../locales/ru.js'
+import ru from '../locales/ru.js';
 import { addProxy, parseData } from './parser.js';
 import startCheck from './checker.js';
 
@@ -47,7 +47,6 @@ const app = () => {
         axios.get(urlWithProxy)
           .then((response) => {
             const { feed, posts } = parseData(response.data.contents, urlWithProxy);
-            
             watchedState.feeds.push(feed);
             watchedState.posts = [...posts, ...watchedState.posts];
             watchedState.error = null;
@@ -67,7 +66,7 @@ const app = () => {
         watchedState.error = error.message;
       });
   });
-}
+};
 
 app();
 startCheck();

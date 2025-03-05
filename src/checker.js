@@ -20,7 +20,7 @@ const rssChecker = (feed) => {
           id,
           feedId: feed.id,
           isRead: false,
-        }
+        };
       });
       const postsWithFeedId = watchedState.posts.filter((post) => post.feedId === feed.id);
       const postsId = postsWithFeedId.map((post) => post.id);
@@ -30,8 +30,7 @@ const rssChecker = (feed) => {
         watchedState.posts = [...newPosts, ...watchedState.posts];
       }
     });
-}
-
+};
 
 const startCheck = (timeout = 5000) => {
   const check = () => {
@@ -43,8 +42,8 @@ const startCheck = (timeout = 5000) => {
       .catch(() => {
         setTimeout(check, timeout);
       });
-  }
+  };
   check();
-}
+};
 
 export default startCheck;

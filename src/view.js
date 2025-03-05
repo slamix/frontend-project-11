@@ -1,5 +1,5 @@
-import onChange from "on-change";
-import i18next from "i18next";
+import onChange from 'on-change';
+import i18next from 'i18next';
 
 const state = {
   feeds: [],
@@ -23,7 +23,7 @@ const renderFeeds = (state) => {
     li.append(h4, p);
     ulForFeeds.appendChild(li);
   });
-}
+};
 
 const renderPosts = (state) => {
   const headerOfPosts = document.querySelector('#posts');
@@ -57,19 +57,16 @@ const renderPosts = (state) => {
       const modalTitle = document.getElementById('postModalLabel');
       const modalDescription = document.getElementById('postModalDescription');
       const modalLink = document.getElementById('postModalLink');
-  
       modalTitle.textContent = post.name;
       modalDescription.textContent = post.description;
       modalLink.setAttribute('href', post.link);
-  
       const modal = new bootstrap.Modal(document.getElementById('postModal'));
       modal.show();
-
-    })
+    });
     li.append(a, button);
     ulForPosts.appendChild(li);
   });
-}
+};
 
 const renderError = (state) => {
   const input = document.querySelector('input');
@@ -85,8 +82,7 @@ const renderError = (state) => {
   notification.classList.remove('text-danger');
   notification.classList.add('text-success');
   notification.textContent = i18next.t('loading.success');
-  return;
-}
+};
 
 const watchedState = onChange(state, (path) => {
   if (path === 'feeds') {

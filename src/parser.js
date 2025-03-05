@@ -6,7 +6,7 @@ const addProxy = (url) => {
   urlWithProxy.searchParams.set('url', url);
   urlWithProxy.searchParams.set('disableCache', 'true');
   return urlWithProxy.toString();
-}
+};
 
 const parseData = (data, urlWithProxy) => {
   const parser = new DOMParser();
@@ -43,6 +43,6 @@ const parseData = (data, urlWithProxy) => {
   });
 
   return { feed, posts };
-}
+};
 
 export { addProxy, parseData };

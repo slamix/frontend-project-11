@@ -1,5 +1,5 @@
 export default {
-  ru:  {
+  ru: {
     translation: {
       loading: {
         success: 'RSS успешно загружен',
@@ -14,6 +14,6 @@ export default {
       feeds: 'Фиды',
       posts: 'Посты',
       preview: 'Просмотр',
-    }
-  }
-}
+    },
+  },
+};
